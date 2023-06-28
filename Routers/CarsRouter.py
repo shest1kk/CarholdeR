@@ -15,13 +15,6 @@ def get_db():
         db.close()
 
 
-# Создание машины
-@CarsRouter.post('/create')
-async def create_cars(request: RequestCars, db: Session = Depends(get_db)):
-    crud.create_cars(db, cars=request.parameter)
-    return request.dict(exclude_none=True)
-
-
 # Вывод всех машин
 @CarsRouter.get('/')
 async def get_all_cars(db: Session = Depends(get_db)):
@@ -36,13 +29,21 @@ async def get_cars_by_id(id: int, db: Session = Depends(get_db)):
     return CarResponse(cars=_cars).dict(exclude_none=True)
 
 
+# Создание машины
+@CarsRouter.post('/create')
+async def create_cars(request: RequestCars, db: Session = Depends(get_db)):
+    crud.create_cars(db, cars=request.parameter)
+    return request.dict(exclude_none=True)
+
+
 # Обновление машины
 @CarsRouter.post('/update')
 async def update_cars(request: RequestCars, db: Session = Depends(get_db)):
     _cars = crud.update_cars(db, cars_id=request.parameter.id, brand=request.parameter.brand,
                              model=request.parameter.model, plate=request.parameter.plate,
                              color=request.parameter.color, available=request.parameter.available,
-                             price=request.parameter.price)
+                             price=request.parameter.price,
+                             image=request.parameter.image)
     return CarResponse(cars=_cars)
 
 

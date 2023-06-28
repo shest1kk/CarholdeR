@@ -10,5 +10,6 @@ venv/scripts/activate
 ```sh
 cd frontend
 npm i
+npm install axios
 npm run serve
 ```

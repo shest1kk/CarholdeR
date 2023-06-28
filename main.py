@@ -2,8 +2,9 @@ from fastapi import FastAPI
 
 import models.models
 from config import engine
-from UserRouter import UsersRouter
-from RolesRouter import RolesRouter
+from Routers.UserRouter import UsersRouter
+from Routers.RolesRouter import RolesRouter
+from Routers.CarsRouter import CarsRouter
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -25,5 +26,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(RolesRouter, prefix='/roles', tags=['ROLES'])
+app.include_router(CarsRouter, prefix='/cars', tags=['CARS'])
 app.include_router(UsersRouter, prefix='/users', tags=['USERS'])
+app.include_router(RolesRouter, prefix='/roles', tags=['ROLES'])

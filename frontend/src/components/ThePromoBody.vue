@@ -317,13 +317,21 @@
   </div>
 
 
-  <ul>
-    <li v-for="result in results" :key="result.id">
-      {{ result.id }}
-      {{ result.name }}
-      {{ result.permissions }}
-    </li>
-  </ul>
+  <div>
+    <h2>Машины:</h2>
+
+    <ul>
+      <li v-for="car in cars" :key="car.id">
+        <div>
+          {{ car.brand }}
+          {{ car.model }}
+          <img :src="car.image" alt="#">
+        </div>
+
+      </li>
+    </ul>
+  </div>
+
 </template>
 
 <script>
@@ -333,19 +341,19 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      results: [],
-      govno: [],
+      cars: [],
     }
   },
   mounted() {
     axios
-        .get('http://127.0.0.1:8000/roles/')
-        .then(response => this.results = response.data.result)
+        .get('http://127.0.0.1:8000/cars/')
+        .then(response => this.cars = response.data.cars)
   },
   name: "ThePromoBody"
 }
 
 </script>
+
 
 <style scoped>
 

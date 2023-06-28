@@ -36,3 +36,4 @@ class Cars(Base):
     color = Column(String, nullable=False)
     available = Column(Boolean, default=True)
     price = Column(Integer, nullable=False)
+    image = Column(String)

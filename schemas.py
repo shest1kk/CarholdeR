@@ -18,7 +18,7 @@ class RolesSchema(BaseModel):
 
 
 class UsersSchema(BaseModel):
-    id: Optional[int] = SERIAL
+    id: Optional[int] = None
     username: Optional[str] = None
     email: Optional[str] = None
     phone: Optional[int] = None
@@ -39,6 +39,10 @@ class CarsSchema(BaseModel):
     color: Optional[str] = None
     available: Optional[bool] = None
     price: Optional[int] = None
+    image: Optional[str] = None
+
+    class Config:
+        orm_mode = True
 
 
 class RequestRoles(BaseModel):
@@ -49,5 +53,17 @@ class RequestUsers(BaseModel):
     parameter: UsersSchema = Field(...)
 
 
-class Response(GenericModel, Generic[T]):
-    result: Optional[T]
+class RequestCars(BaseModel):
+    parameter: CarsSchema = Field(...)
+
+
+class CarResponse(GenericModel, Generic[T]):
+    cars: Optional[T]
+
+
+class UserResponse(GenericModel, Generic[T]):
+    users: Optional[T]
+
+
+class RoleResponse(GenericModel, Generic[T]):
+    roles: Optional[T]

@@ -3,6 +3,50 @@ from models.models import Roles, Users, Cars
 from schemas import RolesSchema, UsersSchema, CarsSchema
 
 
+# Получение списка всех автомобилей
+def get_cars(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(Cars).offset(skip).limit(limit).all()
+
+
+# Получение автомобиля по ID
+def get_cars_by_id(db: Session, cars_id: int):
+    return db.query(Cars).filter(cars_id == Cars.id).first()
+
+
+# Создание автомобиля
+def create_cars(db: Session, cars: CarsSchema):
+    _cars = Cars(id=cars.id, brand=cars.brand, model=cars.model, plate=cars.plate, color=cars.color,
+                 available=cars.available, price=cars.price, image=cars.image)
+    db.add(_cars)
+    db.commit()
+    db.refresh(_cars)
+    return _cars
+
+
+# Удаление машины
+def remove_cars(db: Session, cars_id: int):
+    _cars = get_cars_by_id(db=db, cars_id=cars_id)
+    db.delete(_cars)
+    db.commit()
+
+
+# Обновление данных автомобиля
+def update_cars(db: Session, cars_id: int, brand: str, model: str, plate: str, color: str, available: bool, price: int,
+                image: str):
+    _cars = get_cars_by_id(db=db, cars_id=cars_id)
+
+    _cars.brand = brand
+    _cars.model = model
+    _cars.plate = plate
+    _cars.color = color
+    _cars.available = available
+    _cars.price = price
+    _cars.image = image
+    db.commit()
+    db.refresh(_cars)
+    return _cars
+
+
 # Получение списка всех юзеров
 def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(Users).offset(skip).limit(limit).all()
